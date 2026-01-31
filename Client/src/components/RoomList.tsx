@@ -1,13 +1,15 @@
 
-import { useNavigate, useParams } from 'react-router';
+import { Outlet, useNavigate, useParams } from 'react-router';
 import { roomService } from '../services/roomService.ts';
-
+import { FaLock } from "react-icons/fa";
+import { FaLockOpen } from "react-icons/fa";
+import { AiFillDelete } from "react-icons/ai";
 import './RoomList.scss'
 import { useState } from 'react';
 import { socket } from '../socket.ts';
 import { useAuth } from './AuthProvider.tsx';
 export const RoomList = ({ myRooms,  antRooms }) => {
-  const {  currentUser} = useAuth();
+  const {currentUser} = useAuth();
   const [input, setInput] = useState('')
   const [editingId, setEditingId] = useState<string | null>(null);
   const [previousRoomId, setPreviousRoomId] = useState<string | null>(null);
@@ -38,7 +40,8 @@ export const RoomList = ({ myRooms,  antRooms }) => {
     }
   }
   const navigate = useNavigate()
- const openRoom = (roomId: string) => {
+
+  const openRoom = (roomId: string) => {
 
   if (previousRoomId) {
     socket.emit("leaveRoom", previousRoomId);
@@ -50,8 +53,9 @@ export const RoomList = ({ myRooms,  antRooms }) => {
 }
 
 
- return (<> <div className = 'box'>
- { myRooms.length>0 && <div className = 'position'>
+  return (<>
+    <div className='boxList'>
+ { myRooms.length>0 && <div className = 'myRooms'>
     <h1>My Rooms:</h1>
     <ul className="roomsBox">
       {myRooms.map(room => (
@@ -69,17 +73,20 @@ export const RoomList = ({ myRooms,  antRooms }) => {
             <button  className={`roomsVisite ${
     room.id === Number(roomId) ? 'active' : ''
   }`}
-                onClick={() => {openRoom(room.id)
+                  onClick={() => {
+                    openRoom(room.id)
+                   setEditingId(null)
                 }
-            }>VisiteRoom</button>
-             <button className="roomsDelete "
+            }> {room.id === Number(roomId)?<FaLockOpen/>:<FaLock/>}</button>
+
+                <button className="roomsDelete "
                 onClick={() => {deleteRoom(room.id)
 
 
                 }
-            }>deleteRoom</button>
+            }><AiFillDelete/></button>
               </div></>) :
-            (<input
+            (<input className='inputRename'
               value={input}
               onChange={(event) => {
 
@@ -99,17 +106,18 @@ export const RoomList = ({ myRooms,  antRooms }) => {
             <button className="roomsButton edit"
               onClick={renameRoom}
              disabled ={input.trim().length===0||loading}
-            >Rename✎</button>
+            >Rename</button>
 
           </div>}
         </li>
       ))}
     </ul>
    </div>}
+<Outlet />
 
-   {antRooms.length>0 && <div>
+      {antRooms.length > 0 && <div className='questRooms'>
 
-     <h1>quest rooms:</h1>
+     <h1>Quest rooms:</h1>
     <ul className="roomsBox">
       {antRooms.map(room => (
         <li className="roomsItem" key={room.id}>
@@ -119,11 +127,12 @@ export const RoomList = ({ myRooms,  antRooms }) => {
     room.id === Number(roomId) ? 'active' : ''
   }`}
   onClick={() => openRoom(room.id)}
->VisiteRoom</button>
+>{room.id === Number(roomId)?<FaLockOpen/>:<FaLock/>}</button>
         </li>
       ))}
     </ul>
    </div>}
+
  </div></>
 );
 

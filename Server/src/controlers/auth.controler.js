@@ -27,7 +27,7 @@ res.send({message:'retsese'})
   const newMessage = await mesageService.createMesage(text, findUser.name,findUser.id,findRoom.id)
   const io = req.app.get('io');
 io.to(String(roomId)).emit('message:sent', newMessage);
-res.send({ ok: true });
+res.send({ newMessage });
 }
 
 const register = async (req, res) => {

@@ -1,9 +1,10 @@
-import { MessageForm } from '../components/MessageForm.jsx';
+import './ChatRoom.scss';
+import { MessageForm } from '../../components/MessageForm.jsx';
 import { useState, useEffect } from 'react';
-import { MessageList } from '../components/MessageList.jsx';
+import { MessageList } from '../../components/MessageList.jsx';
 import { useNavigate, useParams } from 'react-router';
-import { socket } from '../socket.ts';
-import { messageService } from '../services/messageService.ts';
+import { socket } from '../../socket.js';
+import { messageService } from '../../services/messageService.js';
 
 export const ChatRoom = () => {
   const { roomId } = useParams();
@@ -18,8 +19,8 @@ export const ChatRoom = () => {
   }, [roomId]);
 
   useEffect(() => {
-    const handler = (message) => {
-      setMessages((prev) => [...prev, message]);
+    const handler = message => {
+      setMessages(prev => [message, ...prev]);
     };
 
     socket.on('message:sent', handler);
@@ -42,10 +43,10 @@ export const ChatRoom = () => {
   return (
     <>
       {roomId && (
-        <section className="section content">
+        <section className="content">
           <h1>{`Room  open now!`}</h1>
           <MessageForm roomId={roomId} />
-          <MessageList messages={messages} />
+          {messages.length > 0 ? <MessageList messages={messages} />:<p>write a first message</p>}
         </section>
       )}
     </>

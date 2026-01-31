@@ -1,10 +1,11 @@
+import '../Rooms/Rooms.scss'
 import { Navigate, Outlet } from "react-router"
-import { useAuth } from "../components/AuthProvider.tsx"
-import { RoomList } from "../components/RoomList.tsx";
+import { useAuth } from "../../components/AuthProvider.js"
+import { RoomList } from "../../components/RoomList.js";
 import { useState,useEffect } from 'react';
-import { roomService } from "../services/roomService.ts";
-import { socket } from "../socket.ts";
-
+import { roomService } from "../../services/roomService.js";
+import { socket } from "../../socket.js";
+import cn from 'classnames';
 
 
 
@@ -81,11 +82,12 @@ return ()=>socket.off('roomDeleted',handleDelete)  }, [])
 
   return (<><button className="button"
     onClick={logout}> LogOut</button>
-    <h1>{`Hello ${currentUser.name}! choose a room based on your interests, or create your own`}</h1>
+<div className="boxRoom">
+    <h1>{`Hello ${currentUser.name}! choose a room, or create your own`}</h1>
 
 
      <form
-      className="field is-horizontal"
+      className="fieldform"
       onSubmit={handleSubmit}
     >
       <input
@@ -95,8 +97,10 @@ return ()=>socket.off('roomDeleted',handleDelete)  }, [])
         value={text}
         onChange={event => setText(event.target.value)}
       />
-      <button className="button"
-      disabled = {text.length=== 0 || loading}>CreateRoom</button>
+        <button className={cn('buttonCreate', {
+        'buttonCreate--disabled': text.trim().length === 0 || loading
+      })}
+      >CreateRoom</button>
     </form>
 
 
@@ -107,6 +111,6 @@ return ()=>socket.off('roomDeleted',handleDelete)  }, [])
       myRooms={myRooms}
       antRooms={anotherRooms}
     />:<h1>There are no rooms, please create a new one.</h1>}
-      <Outlet />
+</div>
   </>)
 }

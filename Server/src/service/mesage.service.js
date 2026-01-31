@@ -12,7 +12,8 @@ async function createMesage(text, userName,userId,roomId) {
     text: newMessage.text,
 
     userName: newMessage.userName,
-    data:newMessage.createdAt
+    data: newMessage.createdAt,
+    userId:newMessage.userId
 }
 }
 async function getAllMessage(roomId) {
@@ -26,7 +27,9 @@ async function getAllMessage(roomId) {
   return { 'text': mes.text,
 
     'userName': mes.userName,
-    'data':mes.createdAt}
+    'data': mes.createdAt,
+    'userId':mes.userId,
+  }
 })
 }
 export const mesageService = {

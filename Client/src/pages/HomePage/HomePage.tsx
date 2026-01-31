@@ -1,9 +1,10 @@
+import '../HomePage/HomePage.scss'
 import { useState } from 'react'
 import { Navigate } from 'react-router';
-import { usePageError } from '../hooks/ErrorPage.tsx';
-import { authService } from '../services/authService.ts';
-import { useAuth } from '../components/AuthProvider.tsx';
-
+import { usePageError } from '../../hooks/ErrorPage.js';
+import { authService } from '../../services/authService.js';
+import { useAuth } from '../../components/AuthProvider.js';
+import cn from 'classnames';
 export const HomePage = () => {
   const [name, setName] = useState('');
   const [error, setError] = usePageError('');
@@ -24,8 +25,8 @@ export const HomePage = () => {
   return '';
 };
 const handleSubmit = async (event: React.FormEvent) => {
-  event.preventDefault();
 
+  event.preventDefault();
   const validateError = validateName(name);
   if (validateError) {
     setError(validateError);
@@ -65,30 +66,44 @@ if (currentUser) {
     return <Navigate to={"/rooms"}/>
   }
 
-  return (<>
-
-    <h1>Chat Page</h1>
+  return (<><div className='blackDoor'>
+<div className='box'>
+      <h1>Chat Room</h1>
+      <div className='registration'>
   <label htmlFor="name" className="label">
-                Enter  name
+                enter your nickname
               </label>
-    <form
-      className="field is-horizontal"
-      onSubmit={handleSubmit
-      }
+        <form className = 'form'
+
+onSubmit={handleSubmit}
+
+
     >
       <input
         id='name'
         type="text"
         className="input"
-        placeholder="Enter  name"
+        placeholder="Enter  nickname"
         value={name}
         onChange={event => setName(event.target.value)}
 
-      />
+          />
+    {<p className={cn('error', { 'error--visible': Boolean(error) })}>
+  {error || '\u00A0'}
+</p>}
 
-      <button className="button"
-        type='submit'
-     disabled={Boolean(error) || name.trim().length === 0 || loading}>Registration</button>
-    </form>
-  {error && <h1>{error}</h1>}</>)
+ <button
+  type="submit"
+  className={cn('buttonRegister', {
+    'buttonRegister--disabled': Boolean(error) || name.trim().length === 0 || loading,
+  })}
+
+>
+  Registration
+</button>
+        </form>
+
+
+   </div> </div></div></>)
 }
+
