@@ -1,5 +1,5 @@
 import '../Rooms/Rooms.scss'
-import { Navigate, Outlet } from "react-router"
+import { Navigate} from "react-router"
 import { useAuth } from "../../components/AuthProvider.js"
 import { RoomList } from "../../components/RoomList.js";
 import { useState,useEffect } from 'react';

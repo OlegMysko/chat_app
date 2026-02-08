@@ -1,13 +1,13 @@
 
 import { Outlet, useNavigate, useParams } from 'react-router';
-import { roomService } from '../services/roomService.ts';
+import { roomService } from '../services/roomService';
 import { FaLock } from "react-icons/fa";
 import { FaLockOpen } from "react-icons/fa";
 import { AiFillDelete } from "react-icons/ai";
 import './RoomList.scss'
 import { useState } from 'react';
-import { socket } from '../socket.ts';
-import { useAuth } from './AuthProvider.tsx';
+import { socket } from '../socket';
+import { useAuth } from './AuthProvider';
 export const RoomList = ({ myRooms,  antRooms }) => {
   const {currentUser} = useAuth();
   const [input, setInput] = useState('')

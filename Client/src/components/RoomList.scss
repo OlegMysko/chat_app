@@ -1,5 +1,6 @@
 .boxList{
   display:  flex;
+height: 85vh;
 }
 .myRooms{
   margin-top: 10px;
@@ -19,6 +20,9 @@ display:flex;
 }
 
 .roomsBox {
+  display: flex;
+ flex-direction: column;
+  overflow-y: auto;
 
   list-style: none;
   padding: 0;
@@ -78,6 +82,8 @@ display:flex;
   }
 }
 .questRooms{
+  display: flex;
+flex-direction: column;
   padding: 10px;
   margin-top: 10px;
   border: 1px solid black;

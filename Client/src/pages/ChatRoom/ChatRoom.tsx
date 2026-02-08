@@ -42,13 +42,14 @@ export const ChatRoom = () => {
   }, [roomId]);
   return (
     <>
-      {roomId && (
-        <section className="content">
-          <h1>{`Room  open now!`}</h1>
+
+      <section className="content">
+        {roomId && (
+         <> <h1>{`Room  open now!`}</h1>
           <MessageForm roomId={roomId} />
           {messages.length > 0 ? <MessageList messages={messages} />:<p>write a first message</p>}
-        </section>
-      )}
+       </> )}  </section>
+
     </>
   );
 };

@@ -1,5 +1,5 @@
+import './MessageForm.scss'
 import { useState } from 'react';
-
 import { messageService } from '../services/messageService.ts';
 import { useAuth } from './AuthProvider.tsx';
 
@@ -13,8 +13,10 @@ export const MessageForm = ({ roomId }) => {
       onSubmit={async (event) => {
         event.preventDefault();
         try {
-          setLoading(true);
-          await messageService.sendMessage(text, roomId, currentUser.id);
+          if (text.trim().length > 0) {
+            setLoading(true);
+            await messageService.sendMessage(text, roomId, currentUser.id);
+          }else return
         } catch {
         } finally {
           setText('');
@@ -29,7 +31,7 @@ export const MessageForm = ({ roomId }) => {
         value={text}
         onChange={(event) => setText(event.target.value)}
       />
-      <button className="button" disabled={text.length === 0 || loading}>
+      <button className="buttonSend" disabled={text.length === 0 || loading}>
         Send
       </button>
     </form>

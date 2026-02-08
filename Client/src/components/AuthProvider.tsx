@@ -1,5 +1,5 @@
 import React, { useMemo, useState, useEffect } from 'react';
-import {User} from '../types/User.ts'
+import {User} from '../types/User'
 
 
 const AuthContext = React.createContext({
