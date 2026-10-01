@@ -72,3 +72,5 @@ chat_app/
 - cd Server
 - npm install
 - npm run start
+
+postgresql://chat_w4gw_user:ZBw6upoXjFdCQqpnrqmuan9UgzPIdM3r@dpg-dav3k7d9fdbs73b4g0sg-a/chat_w4gw
